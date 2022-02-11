@@ -15,7 +15,9 @@ int main(){
   while(price>0){
     cout<<"Enter the price of an item: ";
     cin>>price;
-    sum = sum + price;
+    if(price>0){
+      sum = sum + price;
+    }
   }
   cout<<"The total sum of the items is: $"<<sum<<endl;
 }
