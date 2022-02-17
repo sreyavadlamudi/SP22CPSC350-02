@@ -12,9 +12,9 @@ using namespace std;
 
 /*
 Parser
-This function sets the default for all the variables. The integers are set to 0 and the string is set to null
-@param there are no parameters for this function
-@return the return type is void so the function does not return anything
+This constructor sets the default for all the variables. The integers are set to 0 and the string is set to null
+@param there are no parameters for this constructor
+@return the return type is void so the constructor does not return anything
 */
 
 Parser::Parser(){
