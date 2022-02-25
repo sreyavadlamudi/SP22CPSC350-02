@@ -17,7 +17,8 @@ This constructor sets the default for all the variables. i is set to zero and wo
 
 Translator::Translator(){
   i=0;
-  word = "";
+  newWord2 = "";
+  word = " ";
 }
 
 /*
@@ -66,8 +67,8 @@ string Translator::translateEnglishSentence(string sentence){
       word+=c;
     }
   }
-
-  return newWord;
+  newWord2 = translateEnglishWord(word);
+  return newWord+newWord2;
 
 }
 

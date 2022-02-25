@@ -8,6 +8,7 @@ using namespace std;
 class Translator{
 private:
   int i;
+  string newWord2;
   string word;
 
 public:
