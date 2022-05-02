@@ -1,2 +1,2 @@
-0: R Freshman Chemistry 2.5 4 
-1: S Sophomore CS 3.5 3 
+0: R Freshman Chemistry 2.5 2
+1: S Sophomore CS 3.5 3
