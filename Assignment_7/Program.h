@@ -1,3 +1,13 @@
+/*
+  FileProcessor.h is the header file that declares the newLineCharacter variable,
+  the userChoice variable, the response variable, the tempStudentID variable, the
+  tempFacultyID varaible, the tempAdvisorID variable, the tempNumberOfAdvisees
+  variable, the studentFile variable, the studentLine variable, the studentID
+  variable, the studentIntID variable, the facultyFile variable, the facultyLine
+  variable, the facultyID variable, the facultyIntID variable, the tempSRoot variable,
+  the tempFRoot variable, the studentTable variable, the facultyTable variables,
+  and the function names
+*/
 #include "Tree.h"
 #include "Student.h"
 #include "Faculty.h"
@@ -49,6 +59,10 @@ public:
   void exitProgram();
 };
 
+/*
+  Overloaded Constructor for Program.
+  @param sF: student file name, fF: faculty file name
+*/
 Program::Program(string sF, string fF) {
   userChoice = 0;
   response = "";
@@ -66,10 +80,21 @@ Program::Program(string sF, string fF) {
   facultyIntID = 0;
 }
 
+/*
+  Destructor for Faculty.
+*/
 Program::~Program() {
   return;
 }
 
+/*
+  processFile
+  Opens the two files (student file and faculty file) in input form and checks
+  to see if the files successfully opened (meaning they exist) or failed to
+  open (meaning they don't exist). If the files are opened successfully, then
+  the lines are read into the studentTable and facultyTable respectively. Either
+  way, the programSimulation() function is called.
+*/
 void Program::processFile() {
   ifstream in_file1;
   in_file1.open(studentFile, ios::in);
@@ -118,6 +143,14 @@ void Program::processFile() {
   }
 }
 
+/*
+  programSimulation
+  Creates a while loop where userChoice != 14 (exit) and prompts the user with
+  the menu of option. Depending on the option chosen, the user is prompted for
+  various pieces of information and the respective functions are called. If the
+  user enters 14, then the while loop is exited from, and the exitProgram()
+  function is called.
+*/
 void Program::programSimulation() {
   while (userChoice != 14) {
     cout << endl;
@@ -255,10 +288,7 @@ void Program::programSimulation() {
       cout << "Please enter the student's id." << endl;
       cin >> tempStudentID;
       cout << "Please enter the student's new advisor's id." << endl;
-      cin >> tempAdvisorID;
-
-      cout<<"TempStudentID: "<<tempStudentID<<endl;
-      cout<<"TempFacultyID: "<<tempFacultyID<<endl;
+      cin >> tempFacultyID;
 
       changeAdvisor(tempStudentID, tempFacultyID);
     }
@@ -271,28 +301,54 @@ void Program::programSimulation() {
       removeAdvisee(tempFacultyID, tempStudentID);
     }
   }
-
   exitProgram();
 }
 
+/*
+  printStudents
+  Calls the inOrder function for studentTable while passing the root node to print
+  all of the Student objects
+  @param node: node to begin traversal
+*/
 void Program::printStudents() {
   studentTable.inOrder(studentTable.root);
 }
 
+/*
+  printFaculty
+  Calls the inOrder function for facultyTable while passing the root node to print
+  all of the Faculty objects
+  @param node: node to begin traversal
+*/
 void Program::printFaculty() {
   facultyTable.inOrder(facultyTable.root);
 }
 
+/*
+  displayStudent
+  Prints a Student to the terminal given the id
+  @param sID: student's id
+*/
 void Program::displayStudent(int sID) {
   Student tempS = studentTable.search(sID);
   tempS.print();
 }
 
+/*
+  displayFaculty
+  Prints a Faculty to the terminal given the id
+  @param fID: faculty's id
+*/
 void Program::displayFaculty(int fID) {
   Faculty tempF = facultyTable.search(fID);
   tempF.print();
 }
 
+/*
+  displayAdvisor
+  Prints a student's advisor (Faculty) to the terminal given the student's id
+  @param sID: student's id
+*/
 void Program::displayAdvisor(int sID) {
   Student tempS = studentTable.search(sID);
   tempAdvisorID = tempS.getAdvisorID();
@@ -300,6 +356,11 @@ void Program::displayAdvisor(int sID) {
   tempF.print();
 }
 
+/*
+  displayAdvisees
+  Prints a faculty's advisees (Student) to the terminal given the faculty's id
+  @param fID: faculty's id
+*/
 void Program::displayAdvisees(int fID) {
   Faculty tempF = facultyTable.search(fID);
   tempNumberOfAdvisees = tempF.getNumberOfAdvisees();
@@ -310,49 +371,122 @@ void Program::displayAdvisees(int fID) {
   }
 }
 
+/*
+  addStudent
+  Inserts a Student object into the studentTable tree given values of the member
+  variables of Student
+  @param i: id, n: name, l: level, m: major, g: gpa, aID: advisor ID
+*/
 void Program::addStudent(int i, string n, string l, string m, double g, int aID) {
   Student temp(n, l, m, g, aID);
   studentTable.insert(new TreeNode<Student> (temp, i));
 }
 
+/*
+  deleteStudent
+  Removes a Student object from the studentTable tree given the student's id
+  @param i: id
+*/
 void Program::deleteStudent(int i) {
   studentTable.remove(i);
 }
 
+/*
+  addFaculty
+  Inserts a Faculty object into the facultyTable tree given values of the member
+  variables of Faculy
+  @param i: id, n: name, l: level, d: department, nOA: numberOfAdvisees, aIDs: adviseeIDs
+*/
 void Program::addFaculty(int i, string n, string l, string d, int nOA, int* aIDs) {
   Faculty temp(n, l, d, nOA, aIDs);
   facultyTable.insert(new TreeNode<Faculty> (temp, i));
 }
 
+/*
+  deleteFaculty
+  Removes a Faculty object from the facultyTable tree given the faculty's id
+  @param i: id
+*/
 void Program::deleteFaculty(int i) {
   facultyTable.remove(i);
 }
 
-void Program::changeAdvisor(int sID, int aID) {
+/*
+  changeAdvisor
+  Prompts the user for the student's id and the new advisor id and updates the
+  student's advisor id.
+*/
+void Program::changeAdvisor(int sID, int fID) {
+  // int sID = 0;
+  // int aID = 0;
+  // // cout << "SID: " << sID << endl;
+  // // cout << "AID: " << aID << endl;
+  // // studentTable.search(sID).setAdvisorID(aID);
+  // // int oldAID = studentTable.search(sID).getAdvisorID();
+  // // if (!(facultyTable.contains(aID))) {
+  // //   cout << "This faculty advisor doesn't exist. Would you like to enter a new faculty advisor ID? (Yes/No)" << endl;
+  // //   cin >> response;
+  // //   if (response != "Yes") {
+  // //     return;
+  // //   }
+  // //   else {
+  // //     cin >> aID;
+  // //   }
+  // // }
+  // // // tempS.setAdvisorID(aID);
+  // // Faculty oldTempF = facultyTable.search(oldAID);
+  // // Faculty newTempF = facultyTable.search(aID);
+  // // oldTempF.deleteAdvisee(sID);
+  // // Student tempS1 = studentTable.search(sID);
+  // // cout << "S1 Advisor ID: " << tempS1.getAdvisorID() << endl;
+  //
+  // cout << "Please enter the student's id." << endl;
+  // cin >> sID;
+  // cout << "Please enter the student's new advisor's id." << endl;
+  // cin >> aID;
+  //
+  // cout << "SID: " << sID << endl;
+  // cout << "AID: " << aID << endl;
+  //
+  // if (!(facultyTable.contains(aID))) {
+  //   cout << "This faculty advisor doesn't exist. Would you like to enter a new faculty advisor ID? (Yes/No)" << endl;
+  //   cin >> response;
+  //   if (response != "Yes") {
+  //     return;
+  //   }
+  //   else {
+  //     cin >> aID;
+  //   }
+  // }
+  //
+  // studentTable.search(sID).setAdvisorID(aID);
+  // cout << "Changed Advisor ID: " << studentTable.search(sID).getAdvisorID() << endl;
+  // Faculty tempF = facultyTable.search(aID);
+  // tempF.deleteAdvisee(sID);
+
   Student tempS = studentTable.search(sID);
-  int oldAID = tempS.getAdvisorID();
-  if (!(facultyTable.contains(aID))) {
+  studentTable.remove(sID);
+
+  if (!(facultyTable.contains(fID))) {
     cout << "This faculty advisor doesn't exist. Would you like to enter a new faculty advisor ID? (Yes/No)" << endl;
     cin >> response;
     if (response != "Yes") {
       return;
     }
     else {
-      cin >> aID;
+      cin >> fID;
     }
   }
-  tempS.setAdvisorID(aID);
-  cout << tempS.getAdvisorID() << endl;
-  Faculty oldTempF = facultyTable.search(oldAID);
-  Faculty newTempF = facultyTable.search(aID);
-  cout<<"New AID: "<<aID<<endl;
-  oldTempF.deleteAdvisee(sID);
-  //cout<< "New id: "<<aID<<endl;
 
-  Student temp(temp.name, temp.level, temp.major, temp.gpa, temp.advisorID);
-  studentTable.insert(new TreeNode<Student> (sID, temp));
+  tempS.setAdvisorID(fID);
+  studentTable.insert(new TreeNode<Student> (tempS, sID));
 }
 
+/*
+  removeAdvisee
+  Removes an advisee from a faculty given the faculty's id and the advisee's id
+  @param fID: faculty's id, sID: student's id
+*/
 void Program::removeAdvisee(int fID, int sID) {
   if (!(studentTable.contains(sID))) {
     cout << "This student advisee doesn't exist. Would you like to enter a new student advisee ID? (Yes/No)" << endl;
@@ -371,11 +505,15 @@ void Program::removeAdvisee(int fID, int sID) {
   cout << "Please enter the student's new advisor's id." << endl;
   cin >> fID;
 
-  changeAdvisor(sID, fID);
-  cout << studentTable.search(sID).getAdvisorID() << endl;
-
 }
 
+/*
+  exitProgram
+  Opens the two files (student file and faculty file) and gets the roots for
+  both studentTable and facultyTable. The tables call to the inOrderFile function
+  to write all of the Student objects and Faculty objects into their respective
+  files before closing both files.
+*/
 void Program::exitProgram() {
   ofstream outFile_1;
   ofstream outFile_2;
