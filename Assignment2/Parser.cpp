@@ -61,7 +61,7 @@ This function takes in a string from the user as input
 
 void Parser :: User_Input(){
 
-  cout<<"Enter a string: ";
+  cout<<"Enter a string:";
   getline(cin,sentence);
 
 }
@@ -208,6 +208,14 @@ void Parser :: Total_Counter(){
           pair_counter = pair_counter + 1;
         }
       }
+      else if(letter=='q'){
+        q_counter = q_counter+1;
+        average_counter = average_counter+1;
+        alphabet_counter = alphabet_counter + 1;
+        if(letter=='q'&&letter2=='q'){
+          pair_counter = pair_counter + 1;
+        }
+      }
       else if(letter=='r'){
         r_counter = r_counter+1;
         average_counter = average_counter+1;
@@ -321,6 +329,7 @@ void Parser :: Printer(){
   out_file<<"u:"<<u_counter<<endl;
   out_file<<"v:"<<v_counter<<endl;
   out_file<<"w:"<<w_counter<<endl;
+  out_file<<"x:"<<x_counter<<endl;
   out_file<<"y:"<<y_counter<<endl;
   out_file<<"z:"<<z_counter<<endl;
   out_file<<"alphabets:"<<alphabet_counter<<endl;
