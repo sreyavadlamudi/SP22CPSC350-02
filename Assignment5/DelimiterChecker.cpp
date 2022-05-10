@@ -3,6 +3,9 @@
 #include <fstream>
 #include <stdio.h>
 #include <iostream>
+#include <stack>
+#include <stdexcept>
+
 
 using namespace std;
 
@@ -19,6 +22,7 @@ DelimiterChecker::DelimiterChecker(){
   missingCount = 0;
   missingCount1 = 0;
   line = "";
+  popped = 0;
 }
 
 /*
@@ -40,11 +44,18 @@ void DelimiterChecker::checker(char* input){
         }
       }
       else if(line[i]=='}'||line[i]==')'||line[i]==']'){
-
-        poppedValue = myStack.pop();
+        if(myStack.length() == 0){
+          breakCount++;
+          cout<<"Stack is empty. Error at line "<<counter<<endl;
+          break;
+        }
+        else{
+          poppedValue = myStack.pop();
+        }
 
         if(line[i]=='}'){
           missingCount++;
+
           if(poppedValue=='{'){
             continue;
           }

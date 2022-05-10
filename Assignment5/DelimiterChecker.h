@@ -13,6 +13,7 @@ class DelimiterChecker{
     int missingCount;
     int missingCount1;
     string line;
+    int popped;
 
     DelimiterChecker();
     void checker(char* input);
