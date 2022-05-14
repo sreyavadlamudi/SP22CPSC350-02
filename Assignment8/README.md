@@ -24,4 +24,4 @@ https://stackoverflow.com/questions/53460214/c-displaying-the-beginning-time-and
 Reading size from file:
 https://stackoverflow.com/questions/14867944/how-can-i-read-first-line-from-file#:~:text=You%20can%20try%20this%3A,)%3B%20string%20sLine%3B%20while%20(!
 
-
+Note: Must add name of text file in the command line
